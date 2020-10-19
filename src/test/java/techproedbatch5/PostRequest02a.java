@@ -6,8 +6,7 @@ import org.json.JSONObject;
 import org.junit.Test;
 import org.testng.asserts.SoftAssert;
 
-import static io.restassured.RestAssured.*;
-public class PostRequest02 extends TestBase{
+public class PostRequest02a extends TestBase{
 
             /*  POST Scenario:
                 Content type Json olsun  (Content Type demektir.)
@@ -35,30 +34,8 @@ public class PostRequest02 extends TestBase{
     @Test
     public void post01(){
 
+        Response response =createRequestBodyByJsonObjectClass();
 
-        JSONObject jsonBookingDatesBody = new JSONObject();
-
-        jsonBookingDatesBody.put("checkin","2020-05-02");
-        jsonBookingDatesBody.put("checkout","2020-05-05");
-
-
-        JSONObject jsonRequestBody = new JSONObject();
-
-        jsonRequestBody.put("firstname","Hasan");
-        jsonRequestBody.put("lastname","Kara");
-        jsonRequestBody.put("totalprice",123);
-        jsonRequestBody.put("depositpaid",true);
-        jsonRequestBody.put("bookingdates",jsonBookingDatesBody);
-        jsonRequestBody.put("additionalneeds","Wifi");
-
-        Response response= given().
-                contentType(ContentType.JSON).
-                spec(spec01).
-                auth().
-                basic("admin","password123").
-                body(jsonRequestBody.toString()). //JSonObject class ın body methodu string kabul ettigi icin bu kısmi stringe cevrilir.
-                when().
-                post("/booking");
         response.prettyPrint();
 
         //status code 200 olmali
@@ -68,6 +45,8 @@ public class PostRequest02 extends TestBase{
                 statusCode(200); //hard assrtion
 
         //JsonPath kullanarak assertion
+
+
         JsonPath jsonPath =response.jsonPath();
 
         SoftAssert softAssert=new SoftAssert();
